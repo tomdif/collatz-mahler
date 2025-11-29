@@ -36,7 +36,7 @@
 We investigate the Collatz map through the lens of truncated Koopman operators 
 acting on finite-dimensional spaces of Mahler polynomials over the 2-adic integers. 
 Extensive computations with exact rational arithmetic up to degree $N = 500$ reveal 
-a striking phenomenon: the kernel of the operator $(I - \Koopman_N)$ is consistently 
+a striking phenomenon: the kernel of the operator $(I - M_N)$ is consistently 
 2-dimensional, spanned by the constant function and an alternating vector that 
 approximates $\delta_0 - \delta_{-1}$.
 
@@ -118,7 +118,8 @@ the remarkable stability of the observed kernel structure.
 
 \item \textbf{Computational Observation} (Section~\ref{sec:algebraic}): 
 For all $N \leq 500$, the kernel contains a second linearly independent vector 
-approximating $\delta_0 - \delta_{-1}$, so $\dim \ker(I - M_N) = 2$.
+formally corresponding to $\delta_0 - \delta_{-1}$ (the fixed point at $-1$), 
+so $\dim \ker(I - M_N) = 2$.
 
 \item \textbf{The Dipole Conjecture} (Section~\ref{sec:algebraic}): 
 We conjecture that $\dim \ker(I - M_N) = 2$ for all $N$. This has been verified 
@@ -252,7 +253,7 @@ $N$ & Nullity & Runtime \\
 \bottomrule
 \end{tabular}
 \caption{Nullity of $(I - M_N)$ for selected truncation degrees. All computations 
-performed with exact rational arithmetic. Runtime grows as $O(N^3)$.}
+performed with exact rational arithmetic. Runtime on a standard desktop (2025 hardware).}
 \label{tab:nullity}
 \end{table}
 
