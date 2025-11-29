@@ -377,13 +377,14 @@ The $m$-th component of $M_N v_N$ is
 \]
 Consider the inner sum $S_k := \sum_{j=1}^{\min(T(k), N-1)} (-1)^{j+1} \binom{T(k)}{j}$.
 
-When $T(k) < N$, the sum is complete:
+When $T(k) < N$, the sum is complete. For $k \ge 1$:
 \[
 S_k = \sum_{j=1}^{T(k)} (-1)^{j+1} \binom{T(k)}{j} 
 = -\sum_{j=0}^{T(k)} (-1)^{j} \binom{T(k)}{j} + 1 
 = -(1-1)^{T(k)} + 1 = 1
 \]
-for all $k \ge 1$ (since $T(k) > 0$), while $S_0 = 0$ since $T(0) = 0$.
+since $T(k) > 0$ for $k \ge 1$. For $k = 0$, we have $T(0) = 0$ and $S_0 = 0$ 
+(empty sum).
 
 Therefore, when $T(k) < N$ for all $k \le m$:
 \[
@@ -772,12 +773,13 @@ to the 5-cycle contributing 4 additional eigenvectors (the non-trivial fifth roo
 of unity modes $e^{2\pi ik/5}$ for $k = 1, 2, 3, 4$). For the $3x+1$ Collatz map, 
 the nullity remains constant at 2, indicating no 5-cycles.
 
-\textbf{Reproducibility.} The SHA-256 hashes for the $N = 30$ matrices are:
+\textbf{Reproducibility.} The SHA-256 hashes for the $N = 30$ matrices are 
+(first 32 hex characters; full hashes in repository):
 \begin{verbatim}
-5x+1 M:    9d5cec982ae29b29d024156a437632bb...
-3x+1 M:    f1c9ab07df9b5ea3dfe4813aca104dd5...
-5x+1 M^5:  8bf59ad4c6ed21f9eb5ac6248496d922...
-3x+1 M^5:  853f75290b4ddb64283f0938252e2374...
+5x+1 M:    9d5cec982ae29b29d024156a437632bb
+3x+1 M:    f1c9ab07df9b5ea3dfe4813aca104dd5
+5x+1 M^5:  8bf59ad4c6ed21f9eb5ac6248496d922
+3x+1 M^5:  853f75290b4ddb64283f0938252e2374
 \end{verbatim}
 
 This confirms that the spectral method successfully detects cycles when they are 
