@@ -1,106 +1,78 @@
-# Collatz-Mahler Spectral Analysis
+# The Dipole Conjecture
 
-[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**Spectral Rigidity of the Collatz Koopman Operator in the Mahler Basis**
 
-Computational verification of the **Dipole Conjecture**: the kernel of the truncated Koopman operator for the Collatz map in the Mahler basis is exactly 2-dimensional.
+This repository contains the code and paper for investigating the Collatz conjecture through truncated Koopman operators acting on Mahler polynomials over the 2-adic integers.
 
-## The Dipole Conjecture
+## Main Results
 
-For the accelerated Collatz (Syracuse) map $T(n) = n/2$ if $n$ even, $(3n+1)/2$ if $n$ odd, we construct the $N \times N$ Mahler matrix $M_N$ representing the truncated Koopman operator.
+1. **Theorem (dim ≥ 1)**: The kernel of (I - M_N) has dimension at least 1 for all N, with the lower bound achieved by the fixed point at 0.
 
-**Theorem (Proved):** $\dim \ker(I - M_N) \geq 1$ for all $N$.
+2. **Theorem (2/3-Rigidity)**: The alternating vector v_N = [0, 1, -1, 1, -1, ...]^T satisfies ((I - M_N) v_N)_m = 0 exactly for all m < ⌊2N/3⌋. This explains the remarkable stability of the observed kernel structure.
 
-**Conjecture (Verified for $N \leq 500$):** $\dim \ker(I - M_N) = 2$ for all $N$.
+3. **Computational Observation**: For all N ≤ 500, dim ker(I - M_N) = 2 exactly.
 
-The two kernel directions correspond to:
-1. $\delta_0 = [1, 0, 0, \ldots]$ — the fixed point at 0
-2. $\delta_0 - \delta_{-1} \approx [0, 1, -1, 1, -1, \ldots]$ — the fixed point at -1
+4. **Dipole Conjecture**: dim ker(I - M_N) = 2 for all N.
+
+5. **Positive Control**: The 5x+1 map (which has a known 5-cycle) shows a nullity spike from 2 to 6 at period 5, confirming the method detects cycles when they exist.
+
+## Repository Contents
+
+- `collatz-dipole.tex` - Full paper (LaTeX)
+- `verify_dipole.py` - Main verification script for the Dipole Conjecture
+- `verify_5x1_control.py` - Positive control script for 5x+1 cycle detection
+- `verify_two_thirds.py` - Verification of the 2/3-Rigidity Theorem
 
 ## Quick Start
 
 ```bash
 # Verify the Dipole Conjecture for N=100
-python verify_dipole.py 100
+python3 verify_dipole.py 100
 
-# Positive control: detect the 5-cycle in the 5x+1 map
-python resonance_5x1.py 30
+# Run the 5x+1 positive control
+python3 verify_5x1_control.py
+
+# Verify the 2/3-Rigidity Theorem
+python3 verify_two_thirds.py
 ```
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `verify_dipole.py` | Main verification script for Collatz |
-| `resonance_5x1.py` | Positive control using 5x+1 map |
-| `collatz-dipole.tex` | LaTeX source of the paper |
-| `collatz-dipole.pdf` | Compiled paper |
-
-## Results
-
-### Collatz Map (3x+1)
-```
-N=10:   nullity = 2 ✓
-N=50:   nullity = 2 ✓
-N=100:  nullity = 2 ✓
-N=200:  nullity = 2 ✓
-N=500:  nullity = 2 ✓
-```
-
-### 5x+1 Map (Positive Control)
-The 5x+1 map has a known 5-cycle {1, 3, 8, 4, 2}. Our method detects it:
-
-```
-Period k | dim ker(I - M^k)
----------|------------------
-   1     |       2
-   2     |       2
-   3     |       2
-   4     |       2
-   5     |       6  ← 5-cycle detected!
-```
-
-The nullity spike from 2 to 6 at period 5 confirms the method's sensitivity to cycles.
 
 ## Requirements
 
-- Python 3.6+
-- Standard library only (no external packages)
-- Uses `fractions` module for exact rational arithmetic
+- Python 3.7+
+- No external dependencies (uses only `fractions`, `functools`, `hashlib` from stdlib)
 
-## Runtime
+## Verification Hashes (N=100)
 
-| N | Time |
-|---|------|
-| 10 | ~1 second |
-| 100 | ~1 minute |
-| 200 | ~15 minutes |
-| 500 | ~5 hours |
+For reproducibility, the SHA-256 hashes of the idealized kernel vectors at N=100:
 
-## Mathematical Background
+```
+v1 (δ₀):     33d83547e87812d859d68bc0d71edc1a970a82d714c7d170dba414ce185dd446
+v2 (dipole): 95c5a2404a266b6fd867b4a054d28f7a60bc9f48785af90dda591f3137b7bff1
+```
 
-The Mahler basis consists of binomial coefficient functions $\phi_n(x) = \binom{x}{n}$ which form a basis for continuous functions on $\mathbb{Z}_2$. The Koopman operator $\mathcal{K}$ acts by $(\mathcal{K}f)(x) = f(T(x))$.
+## 5x+1 Positive Control Hashes (N=30)
 
-The matrix entry $M[m,n]$ is computed via finite differences:
-$$M[m,n] = \sum_{k=0}^{m} (-1)^{m-k} \binom{m}{k} \binom{T(k)}{n}$$
+```
+5x+1 M:    9d5cec982ae29b29d024156a437632bb
+3x+1 M:    f1c9ab07df9b5ea3dfe4813aca104dd5
+5x+1 M^5:  8bf59ad4c6ed21f9eb5ac6248496d922
+3x+1 M^5:  853f75290b4ddb64283f0938252e2374
+```
 
 ## Citation
-
-If you use this code, please cite:
 
 ```bibtex
 @article{difiore2025dipole,
   title={The Dipole Conjecture: Spectral Rigidity of the Collatz Koopman Operator in the Mahler Basis},
   author={DiFiore, Thomas A.},
-  journal={Experimental Mathematics},
   year={2025},
-  note={Submitted}
+  note={Preprint}
 }
 ```
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT License - see LICENSE file.
 
 ## Author
 
